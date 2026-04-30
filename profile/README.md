@@ -1,8 +1,7 @@
-# .github
 # 📍 VivaLivre — Acessibilidade e Dignidade em suas mãos
 
 <p align="center">
-  <img src="icon_app.png" width="150" alt="VivaLivre Logo">
+  <img src="img\icon_app.png" width="150" alt="VivaLivre Logo">
 </p>
 
 <p align="center">
