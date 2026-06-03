@@ -53,33 +53,45 @@ Diferente de soluções convencionais, o VivaLivre foi construído com uma arqui
 ### Stack Tecnológico
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    VIVALIVRE ECOSYSTEM                      │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌──────────────────┐         ┌──────────────────────┐    │
-│  │   MOBILE APP     │         │   BACKEND API        │    │
-│  │   (Flutter)      │◄───────►│   (Go + Gin)         │    │
-│  │                  │  REST   │                      │    │
-│  │  • BLoC Pattern  │  JSON   │  • JWT Auth          │    │
-│  │  • Geolocation   │         │  • PostGIS Queries   │    │
-│  │  • Health Diary  │         │  • CRUD Operations   │    │
-│  │  • Digital Card  │         │  • Data Validation   │    │
-│  └──────────────────┘         └──────────────────────┘    │
-│                                         │                  │
-│                                         │ SQL              │
-│                                         ▼                  │
-│                              ┌──────────────────────┐     │
-│                              │   DATABASE           │     │
-│                              │   PostgreSQL + PostGIS│    │
-│                              │                      │     │
-│                              │  • Users             │     │
-│                              │  • Health Entries    │     │
-│                              │  • Bathrooms (Geo)   │     │
-│                              │  • Ratings           │     │
-│                              └──────────────────────┘     │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│                        VIVALIVRE ECOSYSTEM                             │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  ┌──────────────────┐           ┌──────────────────────┐               │
+│  │   MOBILE APP     │           │   BACKEND API        │               │
+│  │   (Flutter)      │◄─────────►│   (Go + Gin)         │               │
+│  │                  │   REST    │                      │               │
+│  │  • BLoC Pattern  │   JSON    │  • JWT Auth          │               │
+│  │  • Geolocation   │           │  • PostGIS Queries   │               │
+│  │  • Health Diary  │           │  • CRUD Operations   │               │
+│  │  • Digital Card  │           │  • Data Validation   │               │
+│  └──────────────────┘           └──────────┬───────────┘               │
+│                                            ▲                           │
+│                                            │ REST                      │
+│                                            ▼ JSON                      │
+│                                 ┌──────────────────────┐               │
+│                                 │   ADMIN PORTAL       │               │
+│                                 │   (Flutter Web)      │               │
+│                                 │                      │               │
+│                                 │  • BLoC Pattern      │               │
+│                                 │  • Moderation UI     │               │
+│                                 │  • User Management   │               │
+│                                 └──────────────────────┘               │
+│                                                                        │
+│                                            │                           │
+│                                            │ SQL                       │
+│                                            ▼                           │
+│                                 ┌──────────────────────┐               │
+│                                 │   DATABASE           │               │
+│                                 │   PostgreSQL + PostGIS               │
+│                                 │                      │               │
+│                                 │  • Users             │               │
+│                                 │  • Health Entries    │               │
+│                                 │  • Bathrooms (Geo)   │               │
+│                                 │  • Ratings           │               │
+│                                 └──────────────────────┘               │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Componentes Principais
@@ -87,6 +99,7 @@ Diferente de soluções convencionais, o VivaLivre foi construído com uma arqui
 | Camada | Tecnologia | Responsabilidade |
 |---|---|---|
 | **Frontend Mobile** | Flutter 3.x + Dart 3.x | Interface nativa iOS/Android, BLoC state management |
+| **Frontend Web** | Flutter 3.x + Dart 3.x | Portal Administrativo responsivo, BLoC state management |
 | **Backend API** | Go 1.21+ + Gin Gonic | API REST, autenticação JWT, lógica de negócio |
 | **Banco de Dados** | PostgreSQL 14+ | Dados relacionais, ACID compliance |
 | **Geolocalização** | PostGIS | Queries geoespaciais, radius search, proximity |
@@ -97,7 +110,7 @@ Diferente de soluções convencionais, o VivaLivre foi construído com uma arqui
 
 - ✅ **Desacoplamento**: Frontend e Backend independentes
 - ✅ **Escalabilidade**: Arquitetura preparada para crescimento
-- ✅ **Segurança**: Autenticação proprietária, dados criptografados
+- ✅ **Segurança**: Autenticação proprietária, dados criptografados e middlewares restritos
 - ✅ **Performance**: Go para alta concorrência, Flutter para UX fluida
 - ✅ **Soberania de Dados**: Infraestrutura própria, sem dependências de terceiros
 - ✅ **Clean Architecture**: Separação clara de responsabilidades
@@ -109,13 +122,14 @@ Diferente de soluções convencionais, o VivaLivre foi construído com uma arqui
 | Projeto | Descrição | Stack | Status |
 | :--- | :--- | :--- | :--- |
 | [**vivalivre-app**](https://github.com/VivaLivre/vivalivre-app) | Aplicativo mobile nativo com geolocalização, diário de saúde e mapa colaborativo. | Flutter/Dart + BLoC | ✅ Ativo |
+| [**vivalivre-admin**](https://github.com/VivaLivre/vivalivre-admin) | Portal administrativo web para moderação e gestão da plataforma. | Flutter Web + BLoC | ✅ Ativo |
 | [**vivalivre-backend**](https://github.com/VivaLivre/vivalivre-backend) | API REST robusta com autenticação JWT, PostGIS e CRUD de dados. | Go + Gin Gonic + PostgreSQL | ✅ Ativo |
 | [**.github**](https://github.com/VivaLivre/.github) | Documentação central, visão do projeto e recursos compartilhados. | Markdown | ✅ Ativo |
 
 ### Como Começar
 
 **Para Desenvolvedores:**
-1. Clone [vivalivre-app](https://github.com/VivaLivre/vivalivre-app) — Siga o README para setup local
+1. Clone [vivalivre-app](https://github.com/VivaLivre/vivalivre-app) e [vivalivre-admin](https://github.com/VivaLivre/vivalivre-admin) — Siga o README para setup local
 2. Clone [vivalivre-backend](https://github.com/VivaLivre/vivalivre-backend) — Configure PostgreSQL e PostGIS
 3. Leia [AGENTS.md](https://github.com/VivaLivre/vivalivre-app/blob/develop/AGENTS.md) — Entenda os papéis e workflows
 
@@ -137,6 +151,7 @@ Localiza o banheiro mais próximo e bem avaliado em um toque, com integração d
 - Filtros por tipo de adaptação e avaliação
 - Contribuição comunitária: adicionar novos banheiros
 - Atualização de informações em tempo real
+- **Moderação centralizada** via portal administrativo (VivaLivre Admin)
 
 ### 🩺 Diário de Saúde
 - Registo diário de sintomas e evacuações
@@ -225,7 +240,7 @@ Contribuições são muito bem-vindas! Siga os passos:
 - ✅ Testes unitários (cobertura ≥ 70%)
 - ✅ Commits semânticos (feat:, fix:, refactor:, docs:)
 - ✅ Sem hard-coded strings ou secrets
-- ✅ Responsivo e acessível (mobile)
+- ✅ Responsivo e acessível (mobile e web)
 - ✅ Dark mode suportado
 
 ---
@@ -233,6 +248,7 @@ Contribuições são muito bem-vindas! Siga os passos:
 ## 📚 Documentação
 
 - **[vivalivre-app README](https://github.com/VivaLivre/vivalivre-app/blob/develop/README.md)** — Guia do aplicativo mobile
+- **[vivalivre-admin README](https://github.com/VivaLivre/vivalivre-admin/blob/main/README.md)** — Guia do portal administrativo web
 - **[vivalivre-backend README](https://github.com/VivaLivre/vivalivre-backend/blob/develop/README.md)** — Guia da API REST
 - **[AGENTS.md](https://github.com/VivaLivre/vivalivre-app/blob/develop/AGENTS.md)** — Definição de papéis e workflows
 - **[CONTRIBUTING.md](https://github.com/VivaLivre/vivalivre-app/blob/develop/CONTRIBUTING.md)** — Guia de contribuição
